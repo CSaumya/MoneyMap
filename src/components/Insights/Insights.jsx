@@ -40,40 +40,51 @@ const Insights = () => {
   }, [data]);
 
   const insightMessage = useMemo(() => {
-    if (monthly.expense > monthly.income) {
-      return "You are spending more than you earn!";
-    }
-    return "Your savings are healthy this month!";
+    return monthly.expense > monthly.income
+      ? "⚠️ You are spending more than you earn!"
+      : "✅ Your savings are healthy this month!";
   }, [monthly]);
 
   return (
-    <div className="grid md:grid-cols-3 gap-4 mt-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 w-full">
+      
+      {/* Highest Spending */}
+      <div className="p-4 sm:p-5 lg:p-6 rounded-xl shadow bg-white dark:bg-[#1C2E4A] hover:shadow-lg transition">
+        <h3 className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+          Highest Spending
+        </h3>
 
-      <div className="p-4 rounded-xl shadow bg-white dark:bg-[#1C2E4A]">
-        <h3 className="text-gray-500 dark:text-gray-400 text-sm">Highest Spending</h3>
-        <p className="text-lg font-bold mt-2 dark:text-gray-300">
-          {highestCategory.maxCategory}
-        </p>
-        <p className="text-red-500">
-          ₹{highestCategory.maxAmount}
-        </p>
-      </div>
-
-      <div className="p-4 rounded-xl shadow bg-white dark:bg-[#1C2E4A]">
-        <h3 className="text-gray-500 dark:text-gray-400 text-sm">Monthly Overview</h3>
-
-        <p className="text-green-500 font-semibold mt-2">
-          Income: ₹{monthly.income}
+        <p className="text-base sm:text-lg font-bold mt-2 dark:text-gray-200 capitalize">
+          {highestCategory.maxCategory || "N/A"}
         </p>
 
-        <p className="text-red-500 font-semibold">
-          Expense: ₹{monthly.expense}
+        <p className="text-red-500 font-semibold text-sm sm:text-base">
+          ₹{highestCategory.maxAmount.toLocaleString("en-IN")}
         </p>
       </div>
 
-      <div className="p-4 rounded-xl shadow bg-white dark:bg-[#1C2E4A]">
-        <h3 className="text-gray-500 dark:text-gray-400 text-sm">Insight</h3>
-        <p className="mt-2 font-medium dark:text-white">
+      {/* Monthly Overview */}
+      <div className="p-4 sm:p-5 lg:p-6 rounded-xl shadow bg-white dark:bg-[#1C2E4A] hover:shadow-lg transition">
+        <h3 className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+          Monthly Overview
+        </h3>
+
+        <p className="text-green-500 font-semibold mt-2 text-sm sm:text-base">
+          Income: ₹{monthly.income.toLocaleString("en-IN")}
+        </p>
+
+        <p className="text-red-500 font-semibold text-sm sm:text-base">
+          Expense: ₹{monthly.expense.toLocaleString("en-IN")}
+        </p>
+      </div>
+
+      {/* Insight */}
+      <div className="p-4 sm:p-5 lg:p-6 rounded-xl shadow bg-white dark:bg-[#1C2E4A] hover:shadow-lg transition">
+        <h3 className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+          Insight
+        </h3>
+
+        <p className="mt-2 font-medium text-sm sm:text-base dark:text-gray-100 leading-relaxed">
           {insightMessage}
         </p>
       </div>
