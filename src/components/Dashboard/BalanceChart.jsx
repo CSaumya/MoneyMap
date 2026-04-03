@@ -7,6 +7,7 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  CartesianGrid,
 } from "recharts";
 
 const BalanceChart = () => {
@@ -33,34 +34,52 @@ const BalanceChart = () => {
   const chartData = Object.values(monthlyData);
 
   return (
-    <div className="bg-white dark:bg-[#1C2E4A] p-4 rounded-xl shadow">
-      <h2 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-200">
+    <div className="bg-white dark:bg-[#1C2E4A] p-4 sm:p-5 lg:p-6 rounded-xl shadow w-full">
+      
+      <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-gray-700 dark:text-gray-200">
         Balance Trend
       </h2>
 
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={chartData}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          
-          {/* Income Line */}
-          <Line
-            type="monotone"
-            dataKey="income"
-            stroke="#22c55e"
-            strokeWidth={2}
-          />
+      {/* Responsive Chart Container */}
+      <div className="w-full h-[250px] sm:h-[300px] lg:h-[350px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={chartData}>
+            
+            {/* Grid (clean UI improvement) */}
+            <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
 
-          {/* Expense Line */}
-          <Line
-            type="monotone"
-            dataKey="expense"
-            stroke="#ef4444"
-            strokeWidth={2}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+            <XAxis
+              dataKey="name"
+              tick={{ fontSize: 12 }}
+              interval="preserveStartEnd"
+            />
+
+            <YAxis tick={{ fontSize: 12 }} />
+
+            <Tooltip />
+
+            {/* Income Line */}
+            <Line
+              type="monotone"
+              dataKey="income"
+              stroke="#22c55e"
+              strokeWidth={2}
+              dot={false}
+              activeDot={{ r: 6 }}
+            />
+
+            {/* Expense Line */}
+            <Line
+              type="monotone"
+              dataKey="expense"
+              stroke="#ef4444"
+              strokeWidth={2}
+              dot={false}
+              activeDot={{ r: 6 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };
