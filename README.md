@@ -1,7 +1,6 @@
-## Project Structure
+## MoneyMap
 
 ```bash
-MoneyMap
 A modern React-based Finance Dashboard with role-based access control, transaction management, data visualization, and insights — built as a frontend assignment project.
 
 Tech Stack
