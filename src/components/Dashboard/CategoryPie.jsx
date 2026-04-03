@@ -17,10 +17,8 @@ const CategoryPie = () => {
 
   transactions.forEach((t) => {
     if (t.type === "expense") {
-      if (!categoryData[t.category]) {
-        categoryData[t.category] = 0;
-      }
-      categoryData[t.category] += t.amount;
+      categoryData[t.category] =
+        (categoryData[t.category] || 0) + t.amount;
     }
   });
 
@@ -30,27 +28,35 @@ const CategoryPie = () => {
   }));
 
   return (
-    <div className="bg-white dark:bg-[#1C2E4A] p-4 rounded-xl shadow mt-10">
-      <h2 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-200">
+    <div className="bg-white dark:bg-[#1C2E4A] p-4 sm:p-5 lg:p-6 rounded-xl shadow mt-6 sm:mt-8 lg:mt-10 w-full">
+      
+      <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-gray-700 dark:text-gray-200">
         Spending Breakdown
       </h2>
 
-      <ResponsiveContainer width="100%" height={300}>
-        <PieChart>
-          <Pie
-            data={chartData}
-            dataKey="value"
-            nameKey="name"
-            outerRadius={100}
-            label
-          >
-            {chartData.map((entry, index) => (
-              <Cell key={index} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
-        </PieChart>
-      </ResponsiveContainer>
+      {/* Responsive Chart Wrapper */}
+      <div className="w-full h-[250px] sm:h-[300px] lg:h-[350px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={chartData}
+              dataKey="value"
+              nameKey="name"
+              outerRadius="70%"
+              innerRadius="40%"
+              label={false}
+            >
+              {chartData.map((_, index) => (
+                <Cell
+                  key={index}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };
